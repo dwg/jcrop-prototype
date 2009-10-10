@@ -5,7 +5,7 @@ by **Arni Einarsson** (dwg)
 
 ## DESCRIPTION:
 
-A Prototype port of the very popular Jcrop plugin for jQuery.
+A Prototype port of the very popular Jcrop plugin for jQuery.  
 Check out the Jcrop page at <http://deepliquid.com/content/Jcrop.html>.
 
 ## REQUIREMENTS:
@@ -14,15 +14,15 @@ Check out the Jcrop page at <http://deepliquid.com/content/Jcrop.html>.
 
 ## LICENSE:
 
-Note, the following applies to the port to prototype only.
+Note, the following applies to the port to prototype only.  
 Copyright (c) 2009 Arni Einarsson <arni.dwg@gmail.com>
-release under the terms of the MIT license.
+released under the terms of the MIT license.
 
 Original code by Kelly Hallman of Deep Liquid (license follows).
 
-jquery.Jcrop.js v0.9.8
-jQuery Image Cropping Plugin
-@author Kelly Hallman <khallman@gmail.com>
+jquery.Jcrop.js v0.9.8  
+jQuery Image Cropping Plugin  
+@author Kelly Hallman <khallman@gmail.com>  
 Copyright (c) 2008-2009 Kelly Hallman - released under MIT License
 
 Permission is hereby granted, free of charge, to any person

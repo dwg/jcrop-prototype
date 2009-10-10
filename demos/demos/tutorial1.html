@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+		<link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+	</head>
+	<body>
+		<div id="outer">
+		<div class="jcExample">
+		<div class="article">
+
+			<h1>Jcrop - Hello World</h1>
+			<img src="demo_files/flowers.jpg" id="cropbox" />
+
+			<p>
+				<b>This example is provided as a demo of the default behavior of Jcrop.</b>
+				Since no event handlers have been attached it only performs
+				the cropping behavior.
+			</p>
+
+			<div id="dl_links">
+				<a href="http://deepliquid.com/content/Jcrop.html">Jcrop Home</a> |
+				<a href="http://deepliquid.com/content/Jcrop_Manual.html">Manual (Docs)</a>
+			</div>
+		</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="../js/prototype.js"></script>
+		<script type="text/javascript" src="../js/jcrop.js"></script>
+		<script type="text/javascript">
+			document.observe('dom:loaded', function() {
+				$('cropbox').jcrop();
+			});
+		</script>
+	</body>
+</html>
+

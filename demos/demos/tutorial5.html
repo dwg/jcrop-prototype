@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+		<link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+		<style type="text/css">
+			fieldset.optdual { width: 500px; }
+			.optdual { position: relative; }
+			.optdual .offset { position: absolute; left: 18em; }
+			.optlist label { width: 16em; display: block; }
+			#dl_links { margin-top: .5em; }
+		</style>
+	</head>
+
+	<body>
+		<div id="outer">
+		<div class="jcExample">
+		<div class="article">
+
+			<h1>Jcrop - API Demo</h1>
+			<img src="demo_files/sago.jpg" id="cropbox" />
+
+			<div style="margin: 20px 0;">
+
+				<span class="requiresjcrop">
+					<button id="setSelect">setSelect</button>
+					<button id="animateTo">animateTo</button>
+					<button id="release">Release</button>
+					<button id="disable">Disable</button>
+				</span>
+
+				<button id="enable" style="display:none;">Re-Enable</button>
+				<button id="unhook">Destroy!</button>
+				<button id="rehook" style="display:none;">Attach Jcrop</button>
+
+			</div>
+
+			<fieldset class="optdual requiresjcrop">
+				<legend>Option Toggles</legend>
+				<div class="optlist offset">
+					<label><input type="checkbox" id="ar_lock" />Aspect ratio</label>
+					<label><input type="checkbox" id="size_lock" />minSize/maxSize setting</label>
+					<label><input type="checkbox" id="bg_swap" />Change outerImage</label>
+				</div>
+				<div class="optlist">
+					<label><input type="checkbox" id="can_click" />Allow new selections</label>
+					<label><input type="checkbox" id="can_move" />Selection can be moved</label>
+					<label><input type="checkbox" id="can_size" />Resizable selection</label>
+				</div>
+			</fieldset>
+
+		<div id="dl_links">
+			<a href="http://deepliquid.com/content/Jcrop.html">Jcrop Home</a> |
+			<a href="http://deepliquid.com/content/Jcrop_Manual.html">Manual (Docs)</a>
+		</div>
+
+		</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="../js/prototype.js"></script>
+		<script type="text/javascript" src="../js/jcrop.js"></script>
+		<script language="Javascript">
+			document.observe('dom:loaded', function(){
+				var jcrop_api;
+				var i, ac;
+
+				initJcrop();
+				
+				function initJcrop() {
+					jcrop_api = Jcrop('cropbox');
+
+					$('can_click','can_move','can_size')
+						.each(function(e) {e.checked = true;});
+
+					$('ar_lock','size_lock','bg_swap').each(function(e){e.checked = false;});
+				}
+
+				// Use the API to find cropping dimensions
+				// Then generate a random selection
+				// This function is used by setSelect and animateTo buttons
+				// Mainly for demonstration purposes
+				function getRandom() {
+					var dim = jcrop_api.getBounds();
+					return [
+						Math.round(Math.random() * dim[0]),
+						Math.round(Math.random() * dim[1]),
+						Math.round(Math.random() * dim[0]),
+						Math.round(Math.random() * dim[1])
+					];
+				}
+
+				// Attach interface buttons
+				// This may appear to be a lot of code but it's simple stuff
+				$('setSelect').observe('click', function(e) {
+					// Sets a random selection
+					jcrop_api.setSelect(getRandom());
+				});
+
+				$('animateTo').observe('click', function(e) {
+					// Animates to a random selection
+					jcrop_api.animateTo(getRandom());
+				});
+
+				$('release').observe('click', function(e) {
+					// Release method clears the selection
+					jcrop_api.release();
+				});
+
+				$('disable').observe('click', function(e) {
+					jcrop_api.disable();
+
+					$('enable').show();
+					$$('.requiresjcrop').invoke('hide');
+				});
+
+				$('enable').observe('click', function(e) {
+					jcrop_api.enable();
+
+					$('enable').hide();
+					$$('.requiresjcrop').invoke('show');
+				});
+
+				$('rehook').observe('click', function(e) {
+					initJcrop();
+					$('rehook','enable').invoke('hide');
+					$$('#unhook,.requiresjcrop').invoke('show');
+					e.stop();
+				});
+
+				$('unhook').observe('click', function(e) {
+					jcrop_api.destroy();
+
+					$$('#unhook,#enable,.requiresjcrop').invoke('hide');
+					$('rehook').show();
+					e.stop();
+				});
+
+				// The checkboxes simply set options based on it's checked value
+				// Options are changed by passing a new options object
+
+				// Also, to prevent strange behavior, they are initially checked
+				// This matches the default initial state of Jcrop
+				$('can_click').observe('change', function(e) {
+					jcrop_api.setOptions({ allowSelect: !!this.checked });
+					jcrop_api.focus();
+				});
+
+				$('can_move').observe('change', function(e) {
+					jcrop_api.setOptions({ allowMove: !!this.checked });
+					jcrop_api.focus();
+				});
+
+				$('can_size').observe('change', function(e) {
+					jcrop_api.setOptions({ allowResize: !!this.checked });
+					jcrop_api.focus();
+				});
+
+				$('ar_lock').observe('change', function(e) {
+					jcrop_api.setOptions(this.checked? { aspectRatio: 4/3 }: { aspectRatio: 0 });
+					jcrop_api.focus();
+				});
+				$('size_lock').observe('change', function(e) {
+					jcrop_api.setOptions(this.checked? {
+						minSize: [ 80, 80 ],
+						maxSize: [ 350, 350 ]
+					}: {
+						minSize: [ 0, 0 ],
+						maxSize: [ 0, 0 ]
+					});
+					jcrop_api.focus();
+				});
+				$('bg_swap').observe('change', function(e) {
+					jcrop_api.setOptions(this.checked? {
+						outerImage: 'demo_files/sagomod.png',
+						bgOpacity: 1
+					}: {
+						outerImage: 'demo_files/sago.jpg',
+						bgOpacity: .6
+					});
+					jcrop_api.release();
+				});
+			});
+		</script>
+	</body>
+</html>
+

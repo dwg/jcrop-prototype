@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+		<link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+	</head>
+	<body>
+
+	<div id="outer">
+	<div class="jcExample">
+	<div class="article">
+
+		<h1>Jcrop - Event Handlers</h1>
+
+		<!-- This is the image we're attaching Jcrop to -->
+		<img src="demo_files/flowers.jpg" id="cropbox" />
+
+		<!-- This is the form that our event handler fills -->
+		<form onsubmit="return false;">
+			<label>X1 <input type="text" size="4" id="x" name="x" /></label>
+			<label>Y1 <input type="text" size="4" id="y" name="y" /></label>
+			<label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
+			<label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
+			<label>W <input type="text" size="4" id="w" name="w" /></label>
+			<label>H <input type="text" size="4" id="h" name="h" /></label>
+		</form>
+
+		<p>
+			<b>An example with a basic event handler.</b> Here we've tied
+			several form values together with a simple event handler invocation.
+			The result is that the form values are updated in real-time as
+			the selection is changed, thanks to Jcrop's <em>onChange</em> event handler.
+		</p>
+
+		<p>
+			That's how easily Jcrop can be integrated into a traditional web form!
+		</p>
+
+		<div id="dl_links">
+			<a href="http://deepliquid.com/content/Jcrop.html">Jcrop Home</a> |
+			<a href="http://deepliquid.com/content/Jcrop_Manual.html">Manual (Docs)</a>
+		</div>
+
+
+	</div>
+	</div>
+	</div>
+	<script type="text/javascript" src="../js/prototype.js"></script>
+	<script type="text/javascript" src="../js/jcrop.js"></script>
+	<script type="text/javascript">
+		document.observe('dom:loaded', function() {
+			var showCoords = function(c) {
+				$('x').setValue(c.x);
+				$('y').setValue(c.y);
+				$('x2').setValue(c.x2);
+				$('y2').setValue(c.y2);
+				$('w').setValue(c.w);
+				$('h').setValue(c.h);
+			};
+			
+			$('cropbox').jcrop({
+				onChange: showCoords,
+				onSelect: showCoords
+			});
+		});
+	</script>
+	</body>
+
+</html>
